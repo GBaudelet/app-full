@@ -10,10 +10,21 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/add", (req, res) => {
+router.get("/admin", (req, res) => {
+  res.render("admin");
+});
+
+router.get("/admin/add", (req, res) => {
   const q = "SELECT * FROM category";
   pool.query(q).then(([categorys]) => {
-    console.log(categorys), res.render("add", { categorys });
+    console.log(categorys), res.render("admin/add", { categorys });
+  });
+});
+
+router.get("/admin/update", (req, res) => {
+  const q = "SELECT * FROM category";
+  pool.query(q).then(([categorys]) => {
+    console.log(categorys), res.render("admin/update", { categorys });
   });
 });
 
