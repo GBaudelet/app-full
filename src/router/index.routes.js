@@ -14,18 +14,35 @@ router.get("/admin", (req, res) => {
   res.render("admin");
 });
 
-router.get("/admin/add", (req, res) => {
-  const q = "SELECT * FROM category";
-  pool.query(q).then(([categorys]) => {
-    console.log(categorys), res.render("admin/add", { categorys });
-  });
-});
-
 router.get("/admin/update", (req, res) => {
   const q = "SELECT * FROM category";
   pool.query(q).then(([categorys]) => {
     console.log(categorys), res.render("admin/update", { categorys });
   });
+});
+
+router.get("/admin/add", (req, res) => {
+  const q = "SELECT * FROM category";
+  pool.query(q).then(([categories]) => {
+    console.log(categories), res.render("admin/add", { categories });
+  });
+});
+
+router.post("/admin/add", (req, res) => {
+  console.log(req.body);
+  const q =
+    "INSERT INTO story (title, content, publishDate, img, category_id) VALUES (?, ?, NOW(), ?, ?)";
+  pool
+    .execute(q, [
+      req.body.title,
+      req.body.content,
+      req.body.img,
+      req.body.category_id,
+    ])
+    .then(() => {
+      res.redirect("/admin/update");
+    })
+    .catch((error) => console.log(error));
 });
 
 router.get("/story/:id", (req, res) => {
