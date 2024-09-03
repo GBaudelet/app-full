@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/add.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">home</a>
+        <a href="/contact">contact</a>
+        <a href="/about">about-me</a>
+        <a href="/authentication">sign-in</a>
+        <a href="/add">add article</a>
+      </nav>
+    </header>
+    <main>
+      <form action="" method="get">
+        <label for="title">titre</label>
+        <input type="text" name="title" id="title" />
+        <label for="content">Content</label>
+        <textarea name="content" id="content" required></textarea>
+        <label for="image-name">Image name</label>
+        <input type="text" name="img" id="image-name" required />
+
+        <label for="">img</label>
+        <input type="text" />
+        <label for="">catégorie</label>
+        <select name="" id="">
+          <% for (const category of categorys) {%>
+          <option value="<%= category.id %>"><%= category.label %></option>
+          <% } %>
+        </select>
+
+        <input type="submit" value="add" />
+      </form>
+    </main>
+    <footer>
+      <h2>c'est la fin</h2>
+    </footer>
+  </body>
+</html>
