@@ -25,7 +25,7 @@
         <input type="text" name="img" id="img" required />
 
         <label for="">catégorie</label>
-        <select name="" id="">
+        <select name="category_id" id="category">
           <% for (const category of categories) {%>
           <option value="<%= category.id %>"><%= category.label %></option>
           <% } %>

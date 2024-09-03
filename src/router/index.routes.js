@@ -1,25 +1,21 @@
 import express from "express";
 import pool from "../config/db.js";
+import { home } from "../controller/view.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  const q = "SELECT * FROM story";
-  pool.query(q).then(([datas]) => {
-    console.log(datas), res.render("home", { datas });
-  });
-});
+router.get("/", home);
 
 router.get("/admin", (req, res) => {
   res.render("admin");
 });
 
-router.get("/admin/update", (req, res) => {
-  const q = "SELECT * FROM category";
-  pool.query(q).then(([categorys]) => {
-    console.log(categorys), res.render("admin/update", { categorys });
-  });
-});
+// router.get("/admin/update", (req, res) => {
+//   const q = "SELECT * FROM category";
+//   pool.query(q).then(([categories]) => {
+//     console.log(categories), res.render("admin/update", { categories });
+//   });
+// });
 
 router.get("/admin/add", (req, res) => {
   const q = "SELECT * FROM category";
