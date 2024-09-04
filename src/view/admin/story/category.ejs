@@ -11,28 +11,25 @@
       <h1>Back Office</h1>
       <nav>
         <a href="/admin">Retourner à l'accueil</a>
-        <a href="/admin/category">Gérer les catégories</a>
+        <a href="/admin/story">Gérer les articles</a>
       </nav>
     </header>
     <main>
-      <h2>Stories List</h2>
-      <a href="/admin/story/create">Create a new story</a>
+      <h2>Category List</h2>
+      <a href="/admin/category/create">Create a new category</a>
 
       <table>
         <tr>
           <th>Id</th>
-          <th>Title</th>
-          <th>Content</th>
-          <th>Actions</th>
+          <th>label</th>
         </tr>
-        <% for (const story of stories) {%>
+        <% for (const category of categories) {%>
         <tr>
-          <td><%= story.id %></td>
-          <td><%= story.title %></td>
-          <td><%= story.content.substring(0, 30) %>...</td>
+          <td><%= category.id %></td>
+          <td><%= category.label %></td>
           <td>
-            <a href="/admin/story/<%= story.id %>">Edit</a>
-            <a href="/admin/story/delete/<%= story.id %>">Delete</a>
+            <a href="/admin/category/<%= category.id %>">Edit</a>
+            <a href="/admin/category/delete/<%= category.id %>">Delete</a>
           </td>
         </tr>
         <% } %>

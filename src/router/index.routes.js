@@ -8,8 +8,10 @@ import {
   admin_view,
   create_story_view,
   story_list_view,
+  update_category,
+  create_category_view,
 } from "../controller/admin/view.js";
-import { create_story } from "../controller/admin/post.js";
+import { create_story, create_category } from "../controller/admin/post.js";
 
 const router = express.Router();
 
@@ -22,9 +24,12 @@ router.get("/story/:id", story_view);
 router.get("/admin", admin_view);
 router.get("/admin/story", story_list_view);
 router.get("/admin/story/create", create_story_view);
+router.get("/admin/category", update_category);
+router.get("/admin/category/create", create_category_view);
 
 // posts
 router.post("/admin/story/create", create_story);
+router.post("/admin/category/create", create_category);
 
 // AUTHENTICATION -> controller
 
@@ -42,6 +47,7 @@ router.post("/register", async (req, res) => {
   // si le nom et le mot de passe ont une longueur supérieure à 2 on procède à l'enregistrement
   if (req.body.username.length > 2 && req.body.password.length > 2) {
     // à faire en plus, vérifier que le nom d'utilisateur n'existe pas déjà !!!
+    //
     // ensuite on hash le mot de passe
     // méthode hash, prend en paramètre le mot de passe et le nombre de tours de la fonction de hachage (plus la valeur est élevée plus le hash est sécurisé et coûteux en ressources)
     const hash = await bcrypt.hash(req.body.password, 10);

@@ -8,16 +8,22 @@
   </head>
   <body>
     <header>
-      <a href="/"><h1>Back home</h1></a>
+      <h1>Back Office</h1>
       <nav>
-        <a href="/admin">admin</a>
-        <a href="/admin/story">Gérer les articles</a>
+        <a href="/admin">Retourner à l'accueil</a>
+        <a href="/admin/story">Retourner aux articles</a>
         <a href="/admin/category">Gérer les catégories</a>
       </nav>
     </header>
-    <main id="admin">
-      <img src="/img/charts.png" alt="" />
-      <img src="/img/circle.png" alt="" />
+    <main>
+      <h2>Add Story</h2>
+
+      <form action="/admin/category/create" method="post">
+        <label for="label">Nom de la category</label>
+        <input type="text" name="label" id="label" required />
+
+        <button type="submit">Create</button>
+      </form>
     </main>
     <footer>
       <p>&copy; 2024</p>
