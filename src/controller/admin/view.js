@@ -16,7 +16,7 @@ const update_category = (req, res) => {
   const q = "SELECT * FROM `category`";
 
   pool.query(q).then(([categories]) => {
-    res.render("admin/story/category", { categories });
+    res.render("admin/category/category", { categories });
   });
 };
 
@@ -30,7 +30,7 @@ const create_story_view = (req, res) => {
 const create_category_view = (req, res) => {
   const q = "SELECT * FROM category";
   pool.query(q).then(([categories]) => {
-    res.render("admin/story/create_category", { categories });
+    res.render("admin/category/create_category", { categories });
   });
 };
 
