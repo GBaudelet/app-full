@@ -45,24 +45,28 @@ router.get("/register", (req, res) => {
 // await aura un comportement synchrone, on stocke le résultat de la promesse dans une variable
 
 router.post("/register", async (req, res) => {
+  const username = req.body.username;
   // si le nom et le mot de passe ont une longueur supérieure à 2 on procède à l'enregistrement
   if (req.body.username.length > 2 && req.body.password.length > 2) {
     // à faire en plus, vérifier que le nom d'utilisateur n'existe pas déjà !!!
 
-    if (!req.body.username) {
-      // ensuite on hash le mot de passe
-      // méthode hash, prend en paramètre le mot de passe et le nombre de tours de la fonction de hachage (plus la valeur est élevée plus le hash est sécurisé et coûteux en ressources)
-      const hash = await bcrypt.hash(req.body.password, 10);
-      // préparation de la requête SQL
-      const q = "INSERT INTO user (username, password) VALUES (?, ?)";
-      // exécution de la requête SQL en envoyant le nom et le HASH du mot de passe
-      await pool.execute(q, [req.body.username, hash]);
-      // redirection vers la page "login" pour améliorer l'experience utilisateur
-      res.redirect("/authentication");
-      return; // on sort de la fonction
-    } else {
-      console.log("l'identifiant existe déjà");
+    const checkQuery = "SELECT username FROM user WHERE username = ?";
+    const [rows] = await pool.execute(checkQuery, [username]);
+    if (rows.length > 0) {
+      // Si le nom d'utilisateur existe déjà, rediriger vers la page d'inscription avec un message d'erreur
+      console.log("l'utilisateur existe déjà");
+      return res.redirect("/register?error=Username already exists");
     }
+    // ensuite on hash le mot de passe
+    // méthode hash, prend en paramètre le mot de passe et le nombre de tours de la fonction de hachage (plus la valeur est élevée plus le hash est sécurisé et coûteux en ressources)
+    const hash = await bcrypt.hash(req.body.password, 10);
+    // préparation de la requête SQL
+    const q = "INSERT INTO user (username, password) VALUES (?, ?)";
+    // exécution de la requête SQL en envoyant le nom et le HASH du mot de passe
+    await pool.execute(q, [req.body.username, hash]);
+    // redirection vers la page "login" pour améliorer l'experience utilisateur
+    res.redirect("/authentication");
+    return; // on sort de la fonction
   }
   // redirection vers la page "register" si les conditions ne sont pas remplies
 

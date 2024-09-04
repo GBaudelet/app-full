@@ -73,7 +73,7 @@ Category(id, label)
 Un BO simple, permettant au propriétaire du site de manipuler les articles du blog :
 
 - Create (Création d'un article)
-- Read   (Lecture d'un article)
+- Read (Lecture d'un article)
 - Update (Mise à jour d'un article)
 - Delete (Suppression d'un article)
 
