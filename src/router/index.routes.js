@@ -21,6 +21,7 @@ router.get("/story/:id", story_view);
 
 // ADMIN -> controller
 // views
+
 router.get("/admin", admin_view);
 router.get("/admin/story", story_list_view);
 router.get("/admin/story/create", create_story_view);
@@ -47,19 +48,24 @@ router.post("/register", async (req, res) => {
   // si le nom et le mot de passe ont une longueur supérieure à 2 on procède à l'enregistrement
   if (req.body.username.length > 2 && req.body.password.length > 2) {
     // à faire en plus, vérifier que le nom d'utilisateur n'existe pas déjà !!!
-    //
-    // ensuite on hash le mot de passe
-    // méthode hash, prend en paramètre le mot de passe et le nombre de tours de la fonction de hachage (plus la valeur est élevée plus le hash est sécurisé et coûteux en ressources)
-    const hash = await bcrypt.hash(req.body.password, 10);
-    // préparation de la requête SQL
-    const q = "INSERT INTO user (username, password) VALUES (?, ?)";
-    // exécution de la requête SQL en envoyant le nom et le HASH du mot de passe
-    await pool.execute(q, [req.body.username, hash]);
-    // redirection vers la page "login" pour améliorer l'experience utilisateur
-    res.redirect("/authentication");
-    return; // on sort de la fonction
+
+    if (!req.body.username) {
+      // ensuite on hash le mot de passe
+      // méthode hash, prend en paramètre le mot de passe et le nombre de tours de la fonction de hachage (plus la valeur est élevée plus le hash est sécurisé et coûteux en ressources)
+      const hash = await bcrypt.hash(req.body.password, 10);
+      // préparation de la requête SQL
+      const q = "INSERT INTO user (username, password) VALUES (?, ?)";
+      // exécution de la requête SQL en envoyant le nom et le HASH du mot de passe
+      await pool.execute(q, [req.body.username, hash]);
+      // redirection vers la page "login" pour améliorer l'experience utilisateur
+      res.redirect("/authentication");
+      return; // on sort de la fonction
+    } else {
+      console.log("l'identifiant existe déjà");
+    }
   }
   // redirection vers la page "register" si les conditions ne sont pas remplies
+
   res.redirect("/register");
 });
 
